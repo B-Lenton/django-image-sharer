@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}Image Sharer{% endblock %}
+
+{% block body %}
+
+    <div class="row py-2">
+        <!-- loop through all posts from views.py (from models.py) -->
+        {% for post in posts %}
+        <!-- dynamic link - if the path changes in urls.py (i.e. change 'detail' in urlpatterns), so does the path to the image -->
+            <!-- display posts one at a time as a card -->
+            <div class="col-sm-6 col-md-3">
+                <div class="card my-4 bg-light p-2">
+                    {% thumbnail post.image "200x200" crop="center" as im %}
+                        <img src="{{ im.url }}" class="card-img-top" alt="...">
+                    {% endthumbnail %}
+                    <div class="card-body">
+                        <p class="card-text bg-info p-2 rounded fw-bolder">{{ post.text }}</p>
+                        <a href="{% url 'feed:detail' post.id %}" class="btn btn-success fw-bold">View full image</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                <div class="col-sm-6 offset-3 text-center py-5 my-5">
+                    <h3>Welcome!</h3>
+                    <p>Maybe it's time to add your first image...</p>
+                    <a href="{% url 'feed:post' %}" class="btn btn-lg btn-success">Upload Image</a>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock %}
