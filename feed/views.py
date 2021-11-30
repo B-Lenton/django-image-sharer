@@ -17,7 +17,7 @@ class HomePageView(TemplateView):
         context["posts"] = Post.objects.all().order_by("-id")
         return context
 
-# if user goes to a particular detail view, fetch that particular imae/post for us - Django manages the database for us
+# if user goes to a particular detail view, fetch that particular image/post for us - Django manages the database for us
 class PostDetailView(DetailView):
     template_name = "detail.html"
     model = Post
